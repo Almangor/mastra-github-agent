@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.mastra/
+*.db
+*.db-*
+.env
+.env.local
+.DS_Store
+.idea/
+.vscode/
