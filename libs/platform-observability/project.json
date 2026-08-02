@@ -1,0 +1,18 @@
+{
+  "name": "ceo-platform-observability",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/platform-observability/src",
+  "projectType": "library",
+  "tags": [
+    "layer:platform"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/platform-observability/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

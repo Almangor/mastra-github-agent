@@ -1,40 +1,57 @@
 {
-  "name": "mastra-github-agent",
+  "name": "ceo-agent",
   "version": "0.1.0",
-  "description": "A Mastra agent that answers questions about GitHub repositories, powered by Claude.",
+  "description": "Super-Elite CEO Agent — an executive operating system built on Mastra, Claude, Slack and Inngest.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "scripts": {
-    "dev": "mastra dev",
-    "demo": "tsx src/demo.ts",
-    "build": "mastra build",
-    "typecheck": "tsc --noEmit"
+    "dev": "mastra dev --dir apps/ceo-runtime/src/mastra",
+    "demo": "tsx apps/ceo-runtime/src/demo.ts",
+    "admin": "tsx apps/ceo-admin/src/main.ts",
+    "worker": "tsx apps/ceo-worker/src/main.ts",
+    "evals": "tsx apps/ceo-evals/src/main.ts",
+    "build": "mastra build --dir apps/ceo-runtime/src/mastra",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint:boundaries": "tsx scripts/check-boundaries.ts",
+    "supply-chain": "node scripts/check-supply-chain.mjs",
+    "sbom": "npm sbom --sbom-format cyclonedx --omit dev > sbom.cyclonedx.json",
+    "scaffold": "tsx scripts/scaffold-workspace.ts",
+    "verify": "npm run supply-chain && npm run lint:boundaries && npm run typecheck && npm run evals"
   },
   "keywords": [
     "mastra",
     "ai-agent",
     "claude",
     "anthropic",
-    "github",
+    "slack",
+    "inngest",
+    "nx",
     "typescript"
   ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
-    "@ai-sdk/anthropic": "^4.0.27",
-    "@mastra/core": "^1.55.0",
-    "@mastra/libsql": "^1.18.0",
-    "@mastra/loggers": "^1.2.0",
-    "@mastra/memory": "^1.24.0",
-    "dotenv": "^17.4.2",
-    "zod": "^3.25.76"
+    "@ai-sdk/anthropic": "4.0.27",
+    "@mastra/core": "1.55.0",
+    "@mastra/libsql": "1.18.0",
+    "@mastra/loggers": "1.2.0",
+    "@mastra/memory": "1.24.0",
+    "dotenv": "17.4.2",
+    "zod": "3.25.76"
   },
   "devDependencies": {
-    "@types/node": "^26.1.2",
-    "mastra": "^1.21.0",
-    "tsx": "^4.23.1",
-    "typescript": "^6.0.3"
+    "@types/node": "26.1.2",
+    "mastra": "1.21.0",
+    "tsx": "4.23.1",
+    "typescript": "6.0.3"
   },
-  "type": "module",
-  "engines": {
-    "node": ">=20.9.0"
+  "overrides": {
+    "@mastra/core": "1.55.0"
   }
 }

@@ -1,0 +1,18 @@
+{
+  "name": "ceo-domain",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ceo-domain/src",
+  "projectType": "library",
+  "tags": [
+    "layer:domain"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/ceo-domain/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

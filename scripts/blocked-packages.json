@@ -1,0 +1,18 @@
+{
+  "$comment": "Plan §6. Versions known or suspected to be malicious. Sourced from the Mastra incident report for the June 2026 npm namespace compromise (116 malicious packages published with a stolen maintainer token). Add entries here rather than relying on `npm audit` alone — audit only covers advisories that have been published.",
+  "blocked": [
+    {
+      "name": "@mastra/core",
+      "versions": ["1.42.1"],
+      "reason": "Named in the plan as an affected version of the June 2026 Mastra npm namespace compromise."
+    }
+  ],
+  "blockedScopes": [
+    {
+      "scope": "@mastra",
+      "publishedBetween": ["2026-06-01T00:00:00Z", "2026-06-30T23:59:59Z"],
+      "reason": "Incident window. Any @mastra/* artifact resolved from this window must be provenance-verified against its GitHub release before use.",
+      "enforcement": "warn"
+    }
+  ]
+}

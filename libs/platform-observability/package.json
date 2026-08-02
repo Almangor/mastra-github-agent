@@ -1,0 +1,12 @@
+{
+  "name": "@ceo/platform-observability",
+  "version": "0.1.0",
+  "description": "Structured logging, tracing, audit log.",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

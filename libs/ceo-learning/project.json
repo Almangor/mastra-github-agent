@@ -1,0 +1,18 @@
+{
+  "name": "ceo-learning",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ceo-learning/src",
+  "projectType": "library",
+  "tags": [
+    "layer:core"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/ceo-learning/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "ceo-runtime",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ceo-runtime/src",
+  "projectType": "application",
+  "tags": [
+    "layer:app"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/ceo-runtime/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

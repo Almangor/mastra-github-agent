@@ -1,0 +1,102 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2023"
+    ],
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "declaration": false,
+    "resolveJsonModule": true,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@ceo/runtime": [
+        "./apps/ceo-runtime/src/index.ts"
+      ],
+      "@ceo/worker": [
+        "./apps/ceo-worker/src/index.ts"
+      ],
+      "@ceo/admin": [
+        "./apps/ceo-admin/src/index.ts"
+      ],
+      "@ceo/evals": [
+        "./apps/ceo-evals/src/index.ts"
+      ],
+      "@ceo/contracts": [
+        "./libs/ceo-contracts/src/index.ts"
+      ],
+      "@ceo/domain": [
+        "./libs/ceo-domain/src/index.ts"
+      ],
+      "@ceo/policy": [
+        "./libs/ceo-policy/src/index.ts"
+      ],
+      "@ceo/agents": [
+        "./libs/ceo-agents/src/index.ts"
+      ],
+      "@ceo/workflows": [
+        "./libs/ceo-workflows/src/index.ts"
+      ],
+      "@ceo/memory": [
+        "./libs/ceo-memory/src/index.ts"
+      ],
+      "@ceo/learning": [
+        "./libs/ceo-learning/src/index.ts"
+      ],
+      "@ceo/skills": [
+        "./libs/ceo-skills/src/index.ts"
+      ],
+      "@ceo/eval-kit": [
+        "./libs/ceo-eval-kit/src/index.ts"
+      ],
+      "@ceo/integrations-slack": [
+        "./libs/integrations-slack/src/index.ts"
+      ],
+      "@ceo/integrations-linear": [
+        "./libs/integrations-linear/src/index.ts"
+      ],
+      "@ceo/integrations-github": [
+        "./libs/integrations-github/src/index.ts"
+      ],
+      "@ceo/integrations-google": [
+        "./libs/integrations-google/src/index.ts"
+      ],
+      "@ceo/integrations-crm": [
+        "./libs/integrations-crm/src/index.ts"
+      ],
+      "@ceo/integrations-finance": [
+        "./libs/integrations-finance/src/index.ts"
+      ],
+      "@ceo/platform-mastra": [
+        "./libs/platform-mastra/src/index.ts"
+      ],
+      "@ceo/platform-inngest": [
+        "./libs/platform-inngest/src/index.ts"
+      ],
+      "@ceo/platform-db": [
+        "./libs/platform-db/src/index.ts"
+      ],
+      "@ceo/platform-observability": [
+        "./libs/platform-observability/src/index.ts"
+      ],
+      "@ceo/platform-config": [
+        "./libs/platform-config/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".mastra",
+    "tmp"
+  ]
+}

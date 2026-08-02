@@ -8,3 +8,7 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+tmp/
+sbom.cyclonedx.json
+ceo-state.db
+ceo-state.db-*

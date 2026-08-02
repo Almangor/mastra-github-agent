@@ -1,0 +1,18 @@
+{
+  "name": "ceo-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ceo-contracts/src",
+  "projectType": "library",
+  "tags": [
+    "layer:contracts"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/ceo-contracts/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

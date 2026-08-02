@@ -1,0 +1,12 @@
+{
+  "name": "@ceo/integrations-google",
+  "version": "0.1.0",
+  "description": "Google Workspace calendar/docs adapter.",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

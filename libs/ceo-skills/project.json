@@ -1,0 +1,18 @@
+{
+  "name": "ceo-skills",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ceo-skills/src",
+  "projectType": "library",
+  "tags": [
+    "layer:core"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/ceo-skills/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

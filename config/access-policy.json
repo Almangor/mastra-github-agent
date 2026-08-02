@@ -1,0 +1,38 @@
+{
+  "workspaces": [
+    {
+      "workspaceId": "T_REPLACE_ME",
+      "label": "Example workspace \u2014 replace before use",
+      "allowSlackConnect": false,
+      "users": [
+        {
+          "userId": "U_REPLACE_CEO",
+          "role": "ceo",
+          "label": "Chief Executive"
+        },
+        {
+          "userId": "U_REPLACE_EXEC",
+          "role": "exec",
+          "label": "Exec team"
+        },
+        {
+          "userId": "U_REPLACE_STAFF",
+          "role": "staff",
+          "label": "Chief of staff"
+        }
+      ],
+      "channels": [
+        {
+          "channelId": "C_REPLACE_EXEC",
+          "policy": "trusted",
+          "label": "#exec"
+        },
+        {
+          "channelId": "C_REPLACE_LEADS",
+          "policy": "restricted",
+          "label": "#leads (may contain guests)"
+        }
+      ]
+    }
+  ]
+}

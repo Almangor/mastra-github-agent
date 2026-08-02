@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # Frozen lockfile + install scripts denied (.npmrc). Plan §6.
+      - name: Install (frozen lockfile, no install scripts)
+        run: npm ci --ignore-scripts
+
+      # Runs first: nothing else is trustworthy if the dependency tree is not.
+      - name: Supply-chain gate
+        run: node scripts/check-supply-chain.mjs --signatures
+
+      - name: Generate SBOM
+        run: npm run sbom
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.cyclonedx.json
+
+      - name: Module boundaries
+        run: npm run lint:boundaries
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Hard gates + quality thresholds. Non-zero exit blocks the merge.
+      - name: Release gates
+        run: npm run evals

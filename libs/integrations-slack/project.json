@@ -1,0 +1,18 @@
+{
+  "name": "ceo-integrations-slack",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/integrations-slack/src",
+  "projectType": "library",
+  "tags": [
+    "layer:integration"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p libs/integrations-slack/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}

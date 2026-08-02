@@ -1,0 +1,18 @@
+{
+  "name": "ceo-worker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ceo-worker/src",
+  "projectType": "application",
+  "tags": [
+    "layer:app"
+  ],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/ceo-worker/tsconfig.json --noEmit",
+        "cwd": "."
+      }
+    }
+  }
+}
