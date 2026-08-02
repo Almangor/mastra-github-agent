@@ -10,8 +10,8 @@
  */
 import 'dotenv/config';
 
-import { hashArguments } from '@ceo/platform-mastra';
-import { buildApprovalRequest } from '@ceo/platform-mastra';
+import { hasModelCredentials } from '@ceo/platform-config';
+import { buildApprovalRequest, hashArguments } from '@ceo/platform-mastra';
 
 import { compose } from './composition.ts';
 import { handleSlackTurn } from './slack-turn.ts';
@@ -44,7 +44,18 @@ const DEMO_POLICY = {
 const live = process.argv.includes('--live');
 
 async function main(): Promise<void> {
-  const composition = compose({ ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY ?? 'sk-ant-demo-placeholder' });
+  const composition = compose();
+
+  // Fail here, with a sentence the reader can act on, rather than letting the
+  // SDK surface a bare 401 three frames deep.
+  if (live && !hasModelCredentials(composition.env)) {
+    console.error(
+      '\n--live needs a real ANTHROPIC_API_KEY.\n' +
+        'Copy .env.example to .env and replace the sk-ant-... placeholder with a key\n' +
+        'from https://console.anthropic.com/settings/keys — then re-run.\n',
+    );
+    process.exit(1);
+  }
   // Swap in the demo policy so the walkthrough works out of the box.
   (composition as { policy: typeof DEMO_POLICY }).policy = DEMO_POLICY;
   (composition.holder as unknown as { deps: { policy: unknown } }).deps.policy = DEMO_POLICY;

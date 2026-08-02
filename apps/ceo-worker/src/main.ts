@@ -34,7 +34,7 @@ function scheduledContext(workspaceId: string, now: Date) {
   });
 }
 
-async function runJob(workflowId: string): Promise<number> {
+async function runJob(workflowId: string, seed: Record<string, unknown> = {}): Promise<number> {
   const workflow = composition.workflows.find(w => w.id === workflowId);
   if (!workflow) {
     console.error(`No workflow "${workflowId}". Known: ${composition.workflows.map(w => w.id).join(', ')}`);
@@ -48,7 +48,15 @@ async function runJob(workflowId: string): Promise<number> {
   }
 
   const now = new Date();
-  const result = await runWorkflow(workflow, { request: scheduledContext(workspaceId, now), now });
+  const result = await runWorkflow(workflow, {
+    request: scheduledContext(workspaceId, now),
+    now,
+    // Seed state lands under `input`, which is where the process steps look for
+    // their arguments — decision-memo reads `input.question`, incident-mode reads
+    // `input.description`. Without this a process that needs an argument can only
+    // ever fail from the CLI.
+    ...(Object.keys(seed).length > 0 ? { resumeState: { input: seed } } : {}),
+  });
 
   console.log(JSON.stringify({ workflowId, status: result.status, awaiting: result.awaiting, trace: result.trace }, null, 2));
 
@@ -62,7 +70,20 @@ async function main(): Promise<number> {
   if (runIndex !== -1) {
     const id = process.argv[runIndex + 1];
     if (!id) { console.error('--run needs a workflow id'); return 1; }
-    return runJob(id);
+
+    const inputIndex = process.argv.indexOf('--input');
+    let seed: Record<string, unknown> = {};
+    if (inputIndex !== -1) {
+      const raw = process.argv[inputIndex + 1];
+      if (!raw) { console.error('--input needs a JSON object'); return 1; }
+      try {
+        seed = JSON.parse(raw) as Record<string, unknown>;
+      } catch (error) {
+        console.error(`--input is not valid JSON: ${error instanceof Error ? error.message : String(error)}`);
+        return 1;
+      }
+    }
+    return runJob(id, seed);
   }
 
   console.log('\nDurable job schedule (plan §2 — Inngest owns scheduled, restart-safe work)\n');
@@ -71,7 +92,9 @@ async function main(): Promise<number> {
     console.log(`  ${job.id.padEnd(28)} ${when.padEnd(28)} → ${job.workflowId}`);
     console.log(`  ${' '.repeat(28)} ${job.description}`);
   }
-  console.log(`\n  ${DURABLE_JOBS.length} jobs · concurrency keyed per workspace · run one with: npm run worker -- --run <workflowId>\n`);
+  console.log(`\n  ${DURABLE_JOBS.length} jobs · concurrency keyed per workspace`);
+  console.log('  run one:  npm run worker -- --run <workflowId>');
+  console.log(`  with input:  npm run worker -- --run decision-memo --input '{"question":"..."}'\n`);
   return 0;
 }
 

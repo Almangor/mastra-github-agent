@@ -2,7 +2,7 @@
   "workspaces": [
     {
       "workspaceId": "T_REPLACE_ME",
-      "label": "Example workspace \u2014 replace before use",
+      "label": "Example workspace — replace before use",
       "allowSlackConnect": false,
       "users": [
         {

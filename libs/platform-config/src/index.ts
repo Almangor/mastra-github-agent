@@ -15,8 +15,15 @@ const Booleanish = z
 export const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
 
-  /** Required: the agent cannot run without a model. */
-  ANTHROPIC_API_KEY: z.string().min(1, 'ANTHROPIC_API_KEY is required'),
+  /**
+   * Optional at load time, required to actually talk to a model.
+   *
+   * The admin CLI, the worker and the eval harness all compose the full system
+   * without ever calling a model, so demanding a key up front would make
+   * `npm run admin policy` — an operator tool for reading the access policy —
+   * refuse to start. Check `hasModelCredentials()` at the point of use instead.
+   */
+  ANTHROPIC_API_KEY: z.string().optional(),
 
   /** Model routing. Defaults chosen in ADR-0004. */
   CEO_SUPERVISOR_MODEL: z.string().default('claude-opus-5'),
@@ -73,6 +80,19 @@ export function loadEnv(overrides: Record<string, string | undefined> = {}): Env
   }
   if (Object.keys(overrides).length === 0) cached = parsed.data;
   return parsed.data;
+}
+
+/**
+ * Whether a live model call is possible.
+ *
+ * Also treats the documented `.env.example` placeholder as absent — a key of
+ * `sk-ant-...` copied straight from the template would otherwise produce a
+ * confusing 401 instead of a clear "no credentials" message.
+ */
+export function hasModelCredentials(env: Env): boolean {
+  const key = env.ANTHROPIC_API_KEY;
+  if (!key) return false;
+  return key !== 'sk-ant-...' && !key.startsWith('sk-ant-demo') && !key.startsWith('sk-ant-placeholder');
 }
 
 /** True when an integration has the credentials it needs to do real work. */
