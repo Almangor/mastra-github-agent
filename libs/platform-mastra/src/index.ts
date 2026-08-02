@@ -5,3 +5,4 @@
 export * from './models.ts';
 export * from './guarded-tool.ts';
 export * from './turn-runtime.ts';
+export * from './workflow-adapter.ts';

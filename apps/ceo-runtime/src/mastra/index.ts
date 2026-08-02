@@ -11,12 +11,16 @@ import { Mastra } from '@mastra/core/mastra';
 import { LibSQLStore } from '@mastra/libsql';
 import { PinoLogger } from '@mastra/loggers';
 
+import { toMastraWorkflows } from '@ceo/platform-mastra';
+
 import { compose } from '../composition.ts';
 
 const composition = compose();
 
 export const mastra = new Mastra({
   agents: composition.agents,
+  // The same definitions the worker and the eval harness run — adapted, not copied.
+  workflows: toMastraWorkflows(composition.workflows) as never,
   storage: new LibSQLStore({ id: 'ceo-agent', url: composition.env.CEO_DB_URL }),
   logger: new PinoLogger({ name: 'ceo-agent', level: 'info' }),
 });
